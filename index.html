@@ -1,256 +1,1104 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vaqtga oid so'zlarning ko'p tilli qiyosiy jadvali</title>
+    <title>康老师汉语教学系统 2.0</title>
+
+    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- 自定义配置 Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        primaryHover: '#4338CA',
+                    },
+                    fontFamily: {
+                        sans: ['"PingFang SC"', '"Microsoft YaHei"', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 增加淡入动画以提升切换体验 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900">
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
 
-    <div id="app" class="min-h-screen p-3 md:p-8">
-        <div class="max-w-7xl mx-auto pb-12">
-            <!-- Header -->
-            <header class="mb-8 md:mb-12 text-center px-2">
-                <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 mb-4">
-                    <i data-lucide="languages" class="text-blue-600 w-8 h-8 md:w-10 md:h-10"></i>
-                    <h1 class="text-xl md:text-3xl font-black text-slate-800 tracking-tight leading-tight">
-                        Vaqtga oid so'zlarning ko'p tilli qiyosiy jadvali
-                    </h1>
+    <!-- 顶部导航 / Hero 区域 -->
+    <header class="bg-indigo-600 text-white shadow-md relative overflow-hidden">
+        <!-- 装饰背景 -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+            <svg class="absolute -top-24 -right-24 w-96 h-96 text-white" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="50,0 100,0 50,100 0,100" />
+            </svg>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-16">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <div class="flex flex-col items-center gap-1 mb-3 md:items-start">
+                        <div class="flex items-center gap-3 justify-center md:justify-start">
+                            <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
+                                <i data-lucide="layout-dashboard" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h1 class="text-3xl font-bold tracking-tight">康老师汉语教学系统 2.0</h1>
+                        </div>
+                        <div class="flex gap-2 text-indigo-200 text-sm font-medium mt-1">
+                            <span>Xitoy tili o'qitish tizimi (O'zbek)</span>
+                            <span>•</span>
+                            <span>Система обучения китайскому языку (Русский)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 调整后的副标题：中乌双语 -->
+                    <div class="text-center md:text-left mt-2">
+                        <p class="text-indigo-100 text-lg font-light">班级管理 · 课程系统 · 学习进度</p>
+                        <p class="text-indigo-200/70 text-sm font-light mt-0.5">Sinfni boshqarish · Kurs tizimi · O'quv jarayoni</p>
+                    </div>
+                    
+                    <!-- 新增：顶部快捷导航按钮（双语增强版） -->
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 mt-6">
+                        <a href="#courses" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">课程系统</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Kurs tizimi</span>
+                        </a>
+                        <a href="#games" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">单词测试及游戏</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Test va o'yinlar</span>
+                        </a>
+                        <a href="#hsk3system" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">HSK 3.0 系统</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">HSK 3.0 tizimi</span>
+                        </a>
+                        <a href="#schedule" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">本周课表</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Haftalik jadvali</span>
+                        </a>
+                        <a href="#songs" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">汉语歌曲</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Xitoycha qo'shiqlar</span>
+                        </a>
+                        <a href="#works" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">学生作品</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Talabalar ishlari</span>
+                        </a>
+                        <a href="#contact" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">联系方式</span>
+                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Bog'lanish uchun</span>
+                        </a>
+                    </div>
                 </div>
-                <h2 class="text-md md:text-xl font-semibold text-blue-600 mb-2 px-4">
-                    Dilfuza Kāng lǎo shī bilan xitoy tilini o'rganmiz
-                </h2>
-                <p class="text-slate-500 italic text-xs md:text-sm">Chinese (pinyin) • O'zbekcha • Русский</p>
-            </header>
+            </div>
+        </div>
+    </header>
 
-            <!-- Timeline Scales Container -->
-            <div id="timeline-container" class="space-y-10 md:space-y-16">
-                <!-- Content will be injected by JS -->
+    <!-- 主体内容 -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 -mt-8 relative z-20">
+        
+        <!-- ================= 调整至顶部：课程系统快捷直达 ================= -->
+        <div id="courses" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+                    <i data-lucide="book-marked" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">课程系统快捷直达</h2>
+                    <p class="text-xs text-emerald-600/70 font-medium mt-0.5">Kurs tizimiga tezkor kirish</p>
+                </div>
             </div>
 
-            <!-- Final Footer -->
-            <footer class="mt-12 mb-8 text-center text-slate-400 text-xs md:text-sm border-t border-slate-200 pt-8 px-4 leading-relaxed">
-                <p>© 2026 Dilfuza Kāng lǎo shī (telegram@diffila)</p>
-            </footer>
-        </div>
-    </div>
+            <!-- 级别选择 Tabs -->
+            <div class="flex flex-wrap gap-2 mb-5 border-b border-slate-100 pb-3">
+                <button onclick="switchQuickAccess('hsk1-qa', this)" class="qa-tab active px-5 py-2 rounded-full text-sm font-medium transition-colors bg-emerald-600 text-white shadow-sm">HSK 1</button>
+                <button onclick="switchQuickAccess('hsk2-qa', this)" class="qa-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 2</button>
+                <button onclick="switchQuickAccess('hsk3-qa', this)" class="qa-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 3</button>
+            </div>
 
-    <script>
-        const apiKey = "";
-        let loadingId = null;
-
-        const timeData = [
-            {
-                category: '日期 (Kunlar / Дни)',
-                items: [
-                    { label: '前天', pinyin: 'qiántiān', uz: 'oldingi kun', ru: 'позавчера', offset: -2, type: 'past' },
-                    { label: '昨天', pinyin: 'zuótiān', uz: 'kecha', ru: 'вчера', offset: -1, type: 'past' },
-                    { label: '今天', pinyin: 'jīntiān', uz: 'bugun', ru: 'сегодня', offset: 0, type: 'present' },
-                    { label: '明天', pinyin: 'míngtiān', uz: 'ertaga', ru: 'завтра', offset: 1, type: 'future' },
-                    { label: '后天', pinyin: 'hòutiān', uz: 'indin', ru: 'послезавтра', offset: 2, type: 'future' },
-                ]
-            },
-            {
-                category: '星期 (Haftalar / Недели)',
-                items: [
-                    { label: '上上个星期', pinyin: 'shàng shàng gè xīngqī', uz: "o'tgan haftadan oldin", ru: 'позапрошлая неделя', offset: -2, type: 'past' },
-                    { label: '上个星期', pinyin: 'shàng gè xīngqī', uz: "o'tgan hafta", ru: 'на прошлой неделе', offset: -1, type: 'past' },
-                    { label: '这个星期', pinyin: 'zhège xīngqī', uz: 'shu hafta', ru: 'на этой неделе', offset: 0, type: 'present' },
-                    { label: '下个星期', pinyin: 'xià gè xīngqī', uz: 'kelasi hafta', ru: 'на следующей неделе', offset: 1, type: 'future' },
-                    { label: '下下个星期', pinyin: 'xià xià gè xīngqī', uz: 'kelasi haftadan keyin', ru: 'через неделю', offset: 2, type: 'future' },
-                ]
-            },
-            {
-                category: '月份 (Oylar / Месяцы)',
-                items: [
-                    { label: '上上个月', pinyin: 'shàng shàng gè yuè', uz: "o'tgan oydan oldin", ru: 'позапрошлый месяц', offset: -2, type: 'past' },
-                    { label: '上个月', pinyin: 'shàng gè yuè', uz: "o'tgan oy", ru: 'в прошлом месяце', offset: -1, type: 'past' },
-                    { label: '这个月', pinyin: 'zhège yuè', uz: 'shu oy', ru: 'в этом месяце', offset: 0, type: 'present' },
-                    { label: '下个月', pinyin: 'xià gè yuè', uz: 'kelasi oy', ru: 'в следующем месяце', offset: 1, type: 'future' },
-                    { label: '下下个月', pinyin: 'xià xià gè yuè', uz: 'kelasi oydan keyin', ru: 'через месяц', offset: 2, type: 'future' },
-                ]
-            },
-            {
-                category: '年份 (Yillar / Годы)',
-                items: [
-                    { label: '前年', pinyin: 'qiánnián', uz: 'ikki yil oldin', ru: 'позапрошлый год', offset: -2, type: 'past' },
-                    { label: '去年', pinyin: 'qùnián', uz: "o'tgan yili", ru: 'прошлый год', offset: -1, type: 'past' },
-                    { label: '今年', pinyin: 'jīnnián', uz: 'shu yil', ru: 'этот год', offset: 0, type: 'present' },
-                    { label: '明年', pinyin: 'míngnián', uz: 'kelasi yili', ru: 'следующий год', offset: 1, type: 'future' },
-                    { label: '后年', pinyin: 'hòunián', uz: 'ikki yildan keyin', ru: 'послеследующий год', offset: 2, type: 'future' },
-                ]
-            }
-        ];
-
-        function pcmToWav(pcmData, sampleRate) {
-            const buffer = new ArrayBuffer(44 + pcmData.length * 2);
-            const view = new DataView(buffer);
-            const writeString = (offset, string) => {
-                for (let i = 0; i < string.length; i++) {
-                    view.setUint8(offset + i, string.charCodeAt(i));
-                }
-            };
-            writeString(0, 'RIFF');
-            view.setUint32(4, 32 + pcmData.length * 2, true);
-            writeString(8, 'WAVE');
-            writeString(12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true);
-            view.setUint16(22, 1, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true);
-            view.setUint16(32, 2, true);
-            view.setUint16(34, 16, true);
-            writeString(36, 'data');
-            view.setUint32(40, pcmData.length * 2, true);
-            for (let i = 0; i < pcmData.length; i++) {
-                view.setInt16(44 + i * 2, pcmData[i], true);
-            }
-            return new Blob([buffer], { type: 'audio/wav' });
-        }
-
-        async function speak(text, id) {
-            if (loadingId) return;
-            loadingId = id;
-            updateUI();
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: text }] }],
-                systemInstruction: { parts: [{ text: "你是一个专业的中文老师。请只读出用户提供的中文词汇，不要说任何多余的话。保持语调清晰、自然。" }] },
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: {
-                        voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } }
-                    }
-                },
-                model: "gemini-2.5-flash-preview-tts"
-            };
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                const audioData = result.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-
-                if (audioData && audioData.data) {
-                    const binaryString = atob(audioData.data);
-                    const len = binaryString.length;
-                    const bytes = new Int16Array(len / 2);
-                    for (let i = 0; i < len; i += 2) {
-                        bytes[i / 2] = (binaryString.charCodeAt(i + 1) << 8) | binaryString.charCodeAt(i);
-                    }
-                    const sampleRateMatch = audioData.mimeType.match(/rate=(\d+)/);
-                    const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1]) : 24000;
-
-                    const wavBlob = pcmToWav(bytes, sampleRate);
-                    const audioUrl = URL.createObjectURL(wavBlob);
-                    const audio = new Audio(audioUrl);
-                    audio.onended = () => {
-                        loadingId = null;
-                        updateUI();
-                        URL.revokeObjectURL(audioUrl);
-                    };
-                    audio.onerror = () => {
-                        loadingId = null;
-                        updateUI();
-                    };
-                    await audio.play();
-                } else {
-                    loadingId = null;
-                    updateUI();
-                }
-            } catch (error) {
-                console.error(error);
-                loadingId = null;
-                updateUI();
-            }
-        }
-
-        function getTypeStyles(type) {
-            switch (type) {
-                case 'past': return 'bg-slate-50 text-slate-700 border-slate-200';
-                case 'present': return 'bg-blue-600 text-white border-blue-700 shadow-lg md:scale-110 z-20';
-                case 'future': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                default: return 'bg-white text-slate-800 border-slate-200';
-            }
-        }
-
-        function updateUI() {
-            const container = document.getElementById('timeline-container');
-            container.innerHTML = timeData.map((section, sectionIdx) => `
-                <div class="relative bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-sm border border-slate-200">
-                    <div class="flex items-center gap-2 md:gap-3 mb-6 md:mb-10 border-b border-slate-100 pb-3 md:pb-4">
-                        <div class="p-1.5 md:p-2 bg-blue-50 rounded-lg">
-                            <i data-lucide="clock" class="text-blue-600 w-5 h-5"></i>
-                        </div>
-                        <h2 class="text-lg md:text-xl font-bold text-slate-700">${section.category}</h2>
-                    </div>
-
-                    <div class="absolute top-[175px] left-10 right-10 h-0.5 bg-slate-100 -z-0 hidden md:block"></div>
-
-                    <div class="flex flex-col md:flex-row md:justify-around items-stretch md:items-start gap-4 md:gap-2 relative z-10 px-1">
-                        ${section.items.map((item, i) => {
-                            const id = `${sectionIdx}-${i}`;
-                            const isLoading = loadingId === id;
-                            const isPresent = item.type === 'present';
-                            
-                            return `
-                            <div class="flex flex-row md:flex-col items-center group w-full md:w-48 gap-3 md:gap-0">
-                                <div class="md:hidden w-10 flex-shrink-0 text-center">
-                                    <span class="text-[10px] font-mono font-bold ${isPresent ? 'text-blue-600' : 'text-slate-400'}">
-                                        ${item.offset === 0 ? 'NOW' : (item.offset > 0 ? '+' + item.offset : item.offset)}
-                                    </span>
-                                </div>
-
-                                <div class="flex-grow md:w-full py-4 md:py-5 px-3 rounded-xl md:rounded-2xl border flex flex-col items-center transition-all duration-300 ${getTypeStyles(item.type)}">
-                                    <div class="flex items-center gap-2 mb-0.5">
-                                        <span class="text-xl md:text-2xl font-bold">${item.label}</span>
-                                        <button 
-                                            onclick="speak('${item.label}', '${id}')"
-                                            ${loadingId !== null ? 'disabled' : ''}
-                                            class="p-2 rounded-full transition-all ${isPresent ? 'bg-white/10 text-yellow-200' : 'bg-slate-100 text-blue-500'} ${loadingId !== null && !isLoading ? 'opacity-30' : 'opacity-100'}"
-                                        >
-                                            ${isLoading ? '<i data-lucide="loader-2" class="animate-spin w-4 h-4"></i>' : '<i data-lucide="volume-2" class="w-4 h-4"></i>'}
-                                        </button>
-                                    </div>
-                                    <span class="text-[11px] font-bold tracking-tight mb-2 text-center lowercase ${isPresent ? 'text-yellow-300' : 'text-amber-600'}">
-                                        ${item.pinyin}
-                                    </span>
-                                    <div class="w-8 h-px mb-2 ${isPresent ? 'bg-white/30' : 'bg-slate-200'}"></div>
-                                    <span class="text-[13px] md:text-[14px] font-semibold text-center mb-1 leading-tight flex items-center ${isPresent ? 'text-white' : 'text-blue-800'}">
-                                        ${item.uz}
-                                    </span>
-                                    <span class="text-[10px] md:text-[11px] text-center opacity-80 leading-tight ${isPresent ? 'text-blue-50' : 'text-slate-500 italic'}">
-                                        ${item.ru}
-                                    </span>
-                                </div>
-
-                                <span class="hidden md:inline-block mt-3 text-[10px] font-mono px-2 py-0.5 rounded-full ${isPresent ? 'bg-blue-100 text-blue-600 font-bold' : 'bg-slate-100 text-slate-400'}">
-                                    ${item.offset === 0 ? 'CURRENT' : (item.offset > 0 ? '+' + item.offset : item.offset)}
-                                </span>
-                            </div>
-                        `;}).join('')}
+            <!-- 课程选择网格区 -->
+            <div class="min-h-[120px]">
+                <!-- HSK 1 (共15课) -->
+                <div id="hsk1-qa" class="qa-content block animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    
+                        <a href="https://kanglaoshi.github.io/HSK1_5.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_6hui.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_7.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_8.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_9zai.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_10.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_11.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_12.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_13zaine.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_14.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_15shide.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 15 课</span>
+                        </a>
                     </div>
                 </div>
-            `).join('');
-            lucide.createIcons();
+
+                <!-- HSK 2 (共15课) -->
+                <div id="hsk2-qa" class="qa-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK2_1jiu.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 1 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_2.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 2 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_3.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 3 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_4.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 4 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_5.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_6x.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_7.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_8i.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_9.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_10.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_11.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_12i.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_13i.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_14.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_15.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 15 课</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 3 (共20课) -->
+                <div id="hsk3-qa" class="qa-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3_1dasuan.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 1 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_2buyu.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 2 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_3.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 3 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_4.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 4 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_5.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_6.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_7.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_8.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_9.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_10.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_11.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_12.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_13.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_14.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_15.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 15 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_16.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 16 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_17.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 17 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_18.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 18 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_19.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 19 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK3_20.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-emerald-50 border border-emerald-200 hover:border-emerald-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-500 group-hover:text-emerald-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-emerald-700 text-sm">第 20 课</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 新增：单词测试及游戏 ================= -->
+        <div id="games" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-purple-50 text-purple-600 rounded-lg">
+                    <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">单词测试及游戏</h2>
+                    <p class="text-xs text-purple-600/70 font-medium mt-0.5">Lug'at testlari va o'yinlar</p>
+                </div>
+            </div>
+
+            <!-- 级别选择 Tabs -->
+            <div class="flex flex-wrap gap-2 mb-5 border-b border-slate-100 pb-3">
+                <button onclick="switchGamesTab('hsk1-games', this)" class="game-tab active px-5 py-2 rounded-full text-sm font-medium transition-colors bg-purple-600 text-white shadow-sm">HSK 1</button>
+                <button onclick="switchGamesTab('hsk2-games', this)" class="game-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 2</button>
+                <button onclick="switchGamesTab('hsk3-games', this)" class="game-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 3</button>
+                <button onclick="switchGamesTab('esc-games', this)" class="game-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">Easy Step Chinese</button>
+                <button onclick="switchGamesTab('yct-games', this)" class="game-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">YCT</button>
+            </div>
+
+            <!-- 游戏选择内容区 -->
+            <div class="min-h-[100px]">
+                <!-- HSK 1 游戏 -->
+                <div id="hsk1-games" class="game-content block animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3.0_1verb.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="puzzle" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">HSK1 动词</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_Newwordtest.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="gamepad-2" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">汉字游戏</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1_Newwordspinyintest.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="keyboard" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">拼音游戏</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/Dilfuza_HSK1yangisozlar_uz/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="layers" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">生词闪卡</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK1hanzi.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="file-check-2" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">基础生词测试</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 2 游戏 -->
+                <div id="hsk2-games" class="game-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK2xihaochengdu.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="heart" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">喜好程度</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_12.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">得的用法</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_14.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="history" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">过的用法</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/HSK2_13.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="compass" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">往的用法</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 3 游戏 -->
+                <div id="hsk3-games" class="game-content hidden animate-fade-in text-slate-500 text-center py-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <i data-lucide="joystick" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                    HSK 3 单词测试及游戏准备中...
+                </div>
+
+                <!-- Easy step chinese 游戏 -->
+                <div id="esc-games" class="game-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/ESC1.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="gamepad-2" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">单词游戏</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/Dilfuzabushou.github.io/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="component" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">偏旁部首</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- YCT 游戏 -->
+                <div id="yct-games" class="game-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/Dilfuzayct1shanka.github.io/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="layers" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">单词闪卡</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/Dilfuzayctwordgame.github.io/" target="_blank" class="flex items-center justify-center gap-2 p-3 bg-white hover:bg-purple-50 border border-purple-200 hover:border-purple-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="gamepad-2" class="w-4 h-4 text-purple-500 group-hover:text-purple-600"></i>
+                            <span class="font-medium text-slate-700 group-hover:text-purple-700 text-sm">单词游戏</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 调整至上方：HSK 3.0 系统 ================= -->
+        <div id="hsk3system" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-orange-50 text-orange-500 rounded-lg">
+                    <i data-lucide="layers" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">HSK 3.0 系统</h2>
+                    <p class="text-xs text-orange-500/70 font-medium mt-0.5">HSK 3.0 tizimi</p>
+                </div>
+            </div>
+
+            <!-- 级别选择 Tabs -->
+            <div class="flex flex-wrap gap-2 mb-5 border-b border-slate-100 pb-3">
+                <button onclick="switchHsk3SystemTab('hsk3sys-1', this)" class="hsk3sys-tab active px-5 py-2 rounded-full text-sm font-medium transition-colors bg-orange-500 text-white shadow-sm">HSK 1</button>
+                <button onclick="switchHsk3SystemTab('hsk3sys-2', this)" class="hsk3sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 2</button>
+                <button onclick="switchHsk3SystemTab('hsk3sys-3', this)" class="hsk3sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 3</button>
+            </div>
+
+            <!-- 内容选择区 -->
+            <div class="min-h-[100px]">
+                <!-- HSK 1 (共15课) -->
+                <div id="hsk3sys-1" class="hsk3sys-content block animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 2 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 3 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 4 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 15 课</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 2 (共15课) -->
+                <div id="hsk3sys-2" class="hsk3sys-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_1.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_2.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 2 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_3.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 3 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_4.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 4 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_5.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_6.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_7.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_8.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_9.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_10.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_11.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_12.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_13.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_14.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/NEWHSK2_15.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 15 课</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 3 (共20课) -->
+                <div id="hsk3sys-3" class="hsk3sys-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 2 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 3 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 4 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 5 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 6 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 7 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 8 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 9 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 10 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 11 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 12 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 13 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 14 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 15 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 16 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 17 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 18 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 19 课</span>
+                        </a>
+                        <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 20 课</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 调整至下方：两列布局 (课表 + 学生管理) ================= -->
+        <!-- 本周课表 (独立全宽显示) -->
+        <div id="schedule" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                        <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                            <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">本周课表与进度</h2>
+                            <p class="text-xs text-indigo-600/70 font-medium mt-0.5">Haftalik dars jadvali va taraqqiyot</p>
+                        </div>
+                    </div>
+                    <button class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                        完整日历 <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 课表双列布局：一三五 & 二四六 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    
+                    <!-- 第一列：奇数日 -->
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">奇</span>
+                                奇数日 (周一、三、五)
+                            </h3>
+                            <div class="pl-4 sm:pl-6 border-l-2 border-slate-100 space-y-4 ml-4">
+                                
+                                <!-- 10:00 -->
+                                <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
+                                    <div class="absolute -left-[21px] sm:-left-[29px] top-6 w-3 h-3 rounded-full bg-white border-2 border-slate-300 group-hover:border-indigo-500 transition-colors"></div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-slate-600 font-mono text-sm font-bold flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 10:00 - 11:30
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK2-1班</h4>
+                                    <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
+                                        <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
+                                        <span class="text-slate-600 font-medium text-sm flex items-center gap-1 flex-grow">
+                                            进度：<strong id="prog-text-1" class="text-indigo-600 text-base font-bold transition-all">第 5 课</strong>
+                                            <input id="prog-input-1" type="text" class="hidden w-16 px-1.5 py-0.5 border border-indigo-300 rounded text-base text-indigo-600 font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 bg-white" value="第 5 课">
+                                        </span>
+                                        <div class="flex gap-1 ml-1">
+                                            <button id="edit-btn-1" onclick="startEdit(1)" class="p-1 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors" title="编辑进度"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                            <button id="save-btn-1" onclick="saveEdit(1)" class="hidden p-1 text-green-500 hover:text-green-700 hover:bg-green-50 rounded transition-colors" title="保存进度"><i data-lucide="check" class="w-4 h-4"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 16:00 -->
+                                <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
+                                    <div class="absolute -left-[21px] sm:-left-[29px] top-6 w-3 h-3 rounded-full bg-white border-2 border-slate-300 group-hover:border-indigo-500 transition-colors"></div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-slate-600 font-mono text-sm font-bold flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 16:00 - 17:30
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK1-1班</h4>
+                                    <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
+                                        <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
+                                        <span class="text-slate-600 font-medium text-sm flex items-center gap-1 flex-grow">
+                                            进度：<strong id="prog-text-2" class="text-indigo-600 text-base font-bold transition-all">第 3 课</strong>
+                                            <input id="prog-input-2" type="text" class="hidden w-16 px-1.5 py-0.5 border border-indigo-300 rounded text-base text-indigo-600 font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 bg-white" value="第 3 课">
+                                        </span>
+                                        <div class="flex gap-1 ml-1">
+                                            <button id="edit-btn-2" onclick="startEdit(2)" class="p-1 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                            <button id="save-btn-2" onclick="saveEdit(2)" class="hidden p-1 text-green-500 hover:text-green-700 hover:bg-green-50 rounded transition-colors"><i data-lucide="check" class="w-4 h-4"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 18:00 -->
+                                <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
+                                    <div class="absolute -left-[21px] sm:-left-[29px] top-6 w-3 h-3 rounded-full bg-white border-2 border-slate-300 group-hover:border-indigo-500 transition-colors"></div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-slate-600 font-mono text-sm font-bold flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 18:00 - 19:30
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK2-2班</h4>
+                                    <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
+                                        <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
+                                        <span class="text-slate-600 font-medium text-sm flex items-center gap-1 flex-grow">
+                                            进度：<strong id="prog-text-3" class="text-indigo-600 text-base font-bold transition-all">第 10 课</strong>
+                                            <input id="prog-input-3" type="text" class="hidden w-16 px-1.5 py-0.5 border border-indigo-300 rounded text-base text-indigo-600 font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 bg-white" value="第 10 课">
+                                        </span>
+                                        <div class="flex gap-1 ml-1">
+                                            <button id="edit-btn-3" onclick="startEdit(3)" class="p-1 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                            <button id="save-btn-3" onclick="saveEdit(3)" class="hidden p-1 text-green-500 hover:text-green-700 hover:bg-green-50 rounded transition-colors"><i data-lucide="check" class="w-4 h-4"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第二列：偶数日 -->
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">偶</span>
+                                偶数日 (周二、四、六)
+                            </h3>
+                            <div class="pl-4 sm:pl-6 border-l-2 border-slate-100 space-y-4 ml-4">
+                                <!-- 16:00 -->
+                                <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
+                                    <div class="absolute -left-[21px] sm:-left-[29px] top-6 w-3 h-3 rounded-full bg-white border-2 border-slate-300 group-hover:border-indigo-500 transition-colors"></div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-slate-600 font-mono text-sm font-bold flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 16:00 - 17:30
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK2-3班</h4>
+                                    <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
+                                        <i data-lucide="book-dashed" class="w-4 h-4 text-slate-400"></i>
+                                        <span class="text-slate-500 font-medium text-sm flex items-center gap-1 flex-grow">
+                                            进度：<strong id="prog-text-4" class="text-slate-700 text-base font-bold transition-all">第 2 课</strong>
+                                            <input id="prog-input-4" type="text" class="hidden w-16 px-1.5 py-0.5 border border-slate-300 rounded text-base text-slate-700 font-bold outline-none focus:ring-2 focus:ring-slate-500/50 bg-white" value="第 2 课">
+                                        </span>
+                                        <div class="flex gap-1 ml-1">
+                                            <button id="edit-btn-4" onclick="startEdit(4)" class="p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded transition-colors"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                            <button id="save-btn-4" onclick="saveEdit(4)" class="hidden p-1 text-green-500 hover:text-green-700 hover:bg-green-50 rounded transition-colors"><i data-lucide="check" class="w-4 h-4"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 18:00 -->
+                                <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
+                                    <div class="absolute -left-[21px] sm:-left-[29px] top-6 w-3 h-3 rounded-full bg-white border-2 border-slate-300 group-hover:border-indigo-500 transition-colors"></div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-slate-600 font-mono text-sm font-bold flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 18:00 - 19:30
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK2-🍌班</h4>
+                                    <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
+                                        <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
+                                        <span class="text-slate-600 font-medium text-sm flex items-center gap-1 flex-grow">
+                                            进度：<strong id="prog-text-5" class="text-indigo-600 text-base font-bold transition-all">第 7 课</strong>
+                                            <input id="prog-input-5" type="text" class="hidden w-16 px-1.5 py-0.5 border border-indigo-300 rounded text-base text-indigo-600 font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 bg-white" value="第 7 课">
+                                        </span>
+                                        <div class="flex gap-1 ml-1">
+                                            <button id="edit-btn-5" onclick="startEdit(5)" class="p-1 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                            <button id="save-btn-5" onclick="saveEdit(5)" class="hidden p-1 text-green-500 hover:text-green-700 hover:bg-green-50 rounded transition-colors"><i data-lucide="check" class="w-4 h-4"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        <!-- ================= 新增：汉语歌曲 ================= -->
+        <div id="songs" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-rose-50 text-rose-500 rounded-lg">
+                    <i data-lucide="music" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">汉语歌曲</h2>
+                    <p class="text-xs text-rose-500/70 font-medium mt-0.5">Xitoycha qo'shiqlar</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="https://youtu.be/4UVHlnoPkSI?si=Dy3vJsDtRgFEng6U" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK2只要有你》</h3>
+                        <p class="text-xs text-slate-500">Zhi yao you ni</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/YNZcx_aGR7g?si=4CsrIKkP6c7Pk7xy" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1我的好朋友在哪儿？》</h3>
+                        <p class="text-xs text-slate-500">Wo de hao peng you zai naer?</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/IpJC7d2yH6s?si=AkOvSOGsibScf_aY" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1喂！你好》</h3>
+                        <p class="text-xs text-slate-500">Wei ni hao</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/uxEHS7Okris?si=2A1H3ThO5pbdyOAR" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1你好，你在哪儿》</h3>
+                        <p class="text-xs text-slate-500">ni hao，ni zai naer</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/eBEP3wVEvok?si=-3K_Oh7V2TnkJwSZ" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK2我喜欢布哈拉的秋天》</h3>
+                        <p class="text-xs text-slate-500">wo xi huan bu ha la de qiu tian</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/IuXHxvk6mzo?si=eX21vpzOoejvhYL1" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1我的一天》</h3>
+                        <p class="text-xs text-slate-500">wo de yi tian</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/ptKSwwuqewk?si=l8DUGl2F3lyqRR87" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK2汉语真有意思》</h3>
+                        <p class="text-xs text-slate-500">han yu zhen you yi si</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/HVOWQCONAPk?si=ytCxvrZExLgZTeF_" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK5我敬这人家自由的风》</h3>
+                        <p class="text-xs text-slate-500">wo jing zhe ren jian zi you de feng</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/ltDWPTdW1AM?si=-Bvb-j0ia10-frk-" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK5童话》</h3>
+                        <p class="text-xs text-slate-500">tong hua</p>
+                    </div>
+                </a>
+                <a href="https://youtube.com/shorts/5zx60GVR6Xg?si=oFC-_zBSAiPTXMdw" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1明年我会说汉语》</h3>
+                        <p class="text-xs text-slate-500">ming nian wo hui shuo han yu</p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/ltDWPTdW1AM?si=-Bvb-j0ia10-frk-" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1你好，你好》</h3>
+                        <p class="text-xs text-slate-500">nihao nihao</p>
+                    </div>
+                </a>
+                <a href="https://youtube.com/shorts/S3Tnq1vWDMA?si=5vh5rXNs5nTtG1D6" target="_blank" class="flex items-center gap-3 p-4 bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-xl transition-all group shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors shadow-inner">
+                        <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-700 text-sm group-hover:text-rose-700">《HSK1今天几月几号》</h3>
+                        <p class="text-xs text-slate-500">jin tian ji yue ji hao</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= 新增：学生作品 ================= -->
+        <div id="works" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-cyan-50 text-cyan-600 rounded-lg">
+                    <i data-lucide="image" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">学生作品</h2>
+                    <p class="text-xs text-cyan-600/70 font-medium mt-0.5">Talabalar ishlari</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                <!-- 作品 1 -->
+                <a href="https://youtu.be/DjXhDGIW90E?si=ejSp6dhFCYacFYQR" target="_blank" class="group block overflow-hidden rounded-xl border border-slate-200 hover:border-cyan-300 hover:shadow-md transition-all">
+                    <div class="h-32 bg-slate-100 relative flex items-center justify-center overflow-hidden">
+                        <!-- 真实的缩略图 -->
+                        <img src="5月6日(1)-封面.jpg" alt="童话合唱缩略图" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cyan/white?text=Image+Not+Found';">
+                        <!-- 添加一个半透明渐变遮罩，确保 hover 时可能出现的图标能看清，如果不加图标这层也可以不要，这里保留为了视觉层次感 -->
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500"></div>
+                        <i data-lucide="play-circle" class="w-10 h-10 text-white/80 relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-md"></i>
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-bold text-slate-800 text-sm mb-1 group-hover:text-cyan-700 transition-colors">童话合唱</h3>
+                        <p class="text-xs text-slate-500">Xitoycha husnixat ko'rgazmasi</p>
+                    </div>
+                </a>
+                <!-- 作品 2 -->
+                <a href="#" class="group block overflow-hidden rounded-xl border border-slate-200 hover:border-cyan-300 hover:shadow-md transition-all">
+                    <div class="h-32 bg-slate-100 relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-emerald-50 group-hover:scale-105 transition-transform duration-500"></div>
+                        <i data-lucide="video" class="w-8 h-8 text-cyan-200 relative z-10"></i>
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-bold text-slate-800 text-sm mb-1 group-hover:text-cyan-700 transition-colors">HSK2 班级对话视频</h3>
+                        <p class="text-xs text-slate-500">HSK2 sinfining dialog videosi</p>
+                    </div>
+                </a>
+                <!-- 作品 3 -->
+                <a href="#" class="group block overflow-hidden rounded-xl border border-slate-200 hover:border-cyan-300 hover:shadow-md transition-all">
+                    <div class="h-32 bg-slate-100 relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-indigo-50 group-hover:scale-105 transition-transform duration-500"></div>
+                        <i data-lucide="layout" class="w-8 h-8 text-cyan-200 relative z-10"></i>
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-bold text-slate-800 text-sm mb-1 group-hover:text-cyan-700 transition-colors">春节文化手抄报</h3>
+                        <p class="text-xs text-slate-500">Bahor bayrami madaniyati devoriy gazetasi</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= 新增：联系方式 ================= -->
+        <div id="contact" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-slate-100 text-slate-600 rounded-lg">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">联系方式</h2>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Bog'lanish uchun</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="#" target="_blank" class="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-[#2CA5E0]/10 border border-slate-200 hover:border-[#2CA5E0] rounded-xl transition-all group text-center">
+                    <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i data-lucide="send" class="w-5 h-5 text-[#2CA5E0]"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 text-sm">Telegram</h3>
+                    <p class="text-xs text-slate-500 mt-1">@diffila</p>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-[#07C160]/10 border border-slate-200 hover:border-[#07C160] rounded-xl transition-all group text-center">
+                    <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i data-lucide="message-square" class="w-5 h-5 text-[#07C160]"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 text-sm">微信 WeChat</h3>
+                    <p class="text-xs text-slate-500 mt-1">xiaokang3110</p>
+                </a>
+                
+                <a href="tel:+998000000000" class="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-xl transition-all group text-center">
+                    <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i data-lucide="phone" class="w-5 h-5 text-indigo-500"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 text-sm">电话 Telefon</h3>
+                    <p class="text-xs text-slate-500 mt-1">+998 94 080 58 28</p>
+                </a>
+
+                <div class="flex flex-col items-center justify-center p-5 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                    <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 text-sm">地址 Manzil</h3>
+                    <p class="text-xs text-slate-500 mt-1">Tashkent, Uzbekistan</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-8 text-center text-sm text-slate-500 border-t border-slate-200 bg-white">
+        <p>© 2026 康老师汉语教学系统 2.0 | 教学管理与学生辅助平台</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 初始化 Lucide 图标
+        lucide.createIcons();
+
+        // HSK 3.0 系统 - 切换逻辑
+        function switchHsk3SystemTab(tabId, element) {
+            document.querySelectorAll('.hsk3sys-tab').forEach(tab => {
+                tab.classList.remove('bg-orange-500', 'text-white', 'active', 'shadow-sm');
+                tab.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            element.classList.remove('bg-slate-100', 'text-slate-600');
+            element.classList.add('bg-orange-500', 'text-white', 'active', 'shadow-sm');
+
+            document.querySelectorAll('.hsk3sys-content').forEach(content => {
+                content.classList.remove('block');
+                content.classList.add('hidden');
+            });
+
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', updateUI);
+        // 单词测试及游戏 - 切换逻辑
+        function switchGamesTab(tabId, element) {
+            document.querySelectorAll('.game-tab').forEach(tab => {
+                tab.classList.remove('bg-purple-600', 'text-white', 'active', 'shadow-sm');
+                tab.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            element.classList.remove('bg-slate-100', 'text-slate-600');
+            element.classList.add('bg-purple-600', 'text-white', 'active', 'shadow-sm');
+
+            document.querySelectorAll('.game-content').forEach(content => {
+                content.classList.remove('block');
+                content.classList.add('hidden');
+            });
+
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+        }
+
+        // 课程系统快捷直达 - 切换逻辑
+        function switchQuickAccess(tabId, element) {
+            // 1. 重置所有标签按钮的激活样式
+            document.querySelectorAll('.qa-tab').forEach(tab => {
+                tab.classList.remove('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+                tab.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            // 2. 为当前点击的按钮添加激活样式
+            element.classList.remove('bg-slate-100', 'text-slate-600');
+            element.classList.add('bg-emerald-600', 'text-white', 'active', 'shadow-sm');
+
+            // 3. 隐藏所有课程内容区域
+            document.querySelectorAll('.qa-content').forEach(content => {
+                content.classList.remove('block');
+                content.classList.add('hidden');
+            });
+
+            // 4. 显示对应级别的课程内容
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+        }
+
+        // 进度编辑功能逻辑
+        function startEdit(id) {
+            // 隐藏文本，显示输入框
+            const textElement = document.getElementById(`prog-text-${id}`);
+            const inputElement = document.getElementById(`prog-input-${id}`);
+            
+            textElement.classList.add('hidden');
+            inputElement.classList.remove('hidden');
+            
+            // 选中文本并获取焦点
+            inputElement.focus();
+            inputElement.select();
+            
+            // 切换编辑/保存按钮状态
+            document.getElementById(`edit-btn-${id}`).classList.add('hidden');
+            document.getElementById(`save-btn-${id}`).classList.remove('hidden');
+            
+            // 添加回车键保存功能
+            inputElement.onkeydown = function(e) {
+                if(e.key === 'Enter') {
+                    saveEdit(id);
+                }
+            };
+        }
+
+        function saveEdit(id) {
+            const textElement = document.getElementById(`prog-text-${id}`);
+            const inputElement = document.getElementById(`prog-input-${id}`);
+            
+            // 更新文字
+            textElement.innerText = inputElement.value;
+            
+            // 隐藏输入框，显示文本
+            inputElement.classList.add('hidden');
+            textElement.classList.remove('hidden');
+            
+            // 切换保存/编辑按钮状态
+            document.getElementById(`save-btn-${id}`).classList.add('hidden');
+            document.getElementById(`edit-btn-${id}`).classList.remove('hidden');
+        }
     </script>
 </body>
 </html>
