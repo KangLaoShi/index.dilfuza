@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilfuza康老师汉语教学系统</title>
+    <title>康老师汉语教学系统</title>
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,8 +17,8 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4F46E5',
-                        primaryHover: '#4338CA',
+                        primary: '#EEF2FF',
+                        primaryHover: '#EEF2FF',
                     },
                     fontFamily: {
                         sans: ['"PingFang SC"', '"Microsoft YaHei"', 'Arial', 'sans-serif'],
@@ -45,25 +45,26 @@
 <body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
 
     <!-- 顶部导航 / Hero 区域 -->
-    <header class="bg-indigo-600 text-white shadow-md relative overflow-hidden">
+    <header class="bg-red-400 text-white shadow-md relative overflow-hidden">
         <!-- 装饰背景 -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
             <svg class="absolute -top-24 -right-24 w-96 h-96 text-white" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <polygon points="50,0 100,0 50,100 0,100" />
             </svg>
         </div>
 
-        <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-16">
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-6 md:py-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
                     <div class="flex flex-col items-center gap-1 mb-3 md:items-start">
+                        <div class="text-white/90 text-sm md:text-base font-medium tracking-wide mb-1.5 drop-shadow-sm">Dilfuza Kāng lǎo shī bilan xitoy tilini o'rganmiz</div>
                         <div class="flex items-center gap-3 justify-center md:justify-start">
                             <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                                 <i data-lucide="layout-dashboard" class="w-8 h-8 text-white"></i>
                             </div>
-                            <h1 class="text-3xl font-bold tracking-tight">康老师汉语教学系统 2.0</h1>
+                            <h1 class="text-3xl font-bold tracking-tight">康老师汉语教学系统</h1>
                         </div>
-                        <div class="flex gap-2 text-indigo-200 text-sm font-medium mt-1">
+                        <div class="flex gap-2 text-white/80 text-sm font-medium mt-1">
                             <span>Xitoy tili o'qitish tizimi (O'zbek)</span>
                             <span>•</span>
                             <span>Система обучения китайскому языку (Русский)</span>
@@ -72,39 +73,43 @@
                     
                     <!-- 调整后的副标题：中乌双语 -->
                     <div class="text-center md:text-left mt-2">
-                        <p class="text-indigo-100 text-lg font-light">班级管理 · 课程系统 · 学习进度</p>
-                        <p class="text-indigo-200/70 text-sm font-light mt-0.5">Sinfni boshqarish · Kurs tizimi · O'quv jarayoni</p>
+                        <p class="text-white/90 text-lg font-light">班级管理 · 课程系统 · 学习进度</p>
+                        <p class="text-white/70 text-sm font-light mt-0.5">Sinfni boshqarish · Kurs tizimi · O'quv jarayoni</p>
                     </div>
                     
                     <!-- 新增：顶部快捷导航按钮（双语增强版） -->
-                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 mt-6">
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 mt-5">
                         <a href="#courses" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">课程系统</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Kurs tizimi</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Kurs tizimi</span>
                         </a>
                         <a href="#games" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">单词测试及游戏</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Test va o'yinlar</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Test va o'yinlar</span>
                         </a>
                         <a href="#hsk3system" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">HSK 3.0 系统</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">HSK 3.0 tizimi</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">HSK 3.0 tizimi</span>
                         </a>
                         <a href="#schedule" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">本周课表</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Haftalik jadvali</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Haftalik jadvali</span>
+                        </a>
+                        <a href="https://kanglaoshi.github.io/Student-Payment-Tracker.dilfuza/" target="_blank" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
+                            <span class="text-sm font-medium">学生管理</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Talabalar boshqaruvi</span>
                         </a>
                         <a href="#songs" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">汉语歌曲</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Xitoycha qo'shiqlar</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Xitoycha qo'shiqlar</span>
                         </a>
                         <a href="#works" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">学生作品</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Talabalar ishlari</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Talabalar ishlari</span>
                         </a>
                         <a href="#contact" class="flex flex-col items-center justify-center px-4 py-1.5 bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                             <span class="text-sm font-medium">联系方式</span>
-                            <span class="text-[11px] text-indigo-200 group-hover:text-white transition-colors">Bog'lanish uchun</span>
+                            <span class="text-[11px] text-white/70 group-hover:text-white transition-colors">Bog'lanish uchun</span>
                         </a>
                     </div>
                 </div>
@@ -113,7 +118,7 @@
     </header>
 
     <!-- 主体内容 -->
-    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 -mt-8 relative z-20">
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 -mt-4 relative z-20">
         
         <!-- ================= 调整至顶部：课程系统快捷直达 ================= -->
         <div id="courses" class="scroll-mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
@@ -622,10 +627,13 @@
                     <!-- 第一列：奇数日 -->
                     <div class="flex flex-col gap-8">
                         <div>
-                            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
-                                <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">奇</span>
-                                奇数日 (周一、三、五)
-                            </h3>
+                            <div class="mb-4">
+                                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                    <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">奇</span>
+                                    奇数日 (周一、三、五)
+                                </h3>
+                                <p class="text-xs text-slate-500 ml-10 mt-0.5 font-medium">Toq kunlar (Dushanba, Chorshanba, Juma)</p>
+                            </div>
                             <div class="pl-4 sm:pl-6 border-l-2 border-slate-100 space-y-4 ml-4">
                                 
                                 <!-- 10:00 -->
@@ -700,10 +708,13 @@
                     <!-- 第二列：偶数日 -->
                     <div class="flex flex-col gap-8">
                         <div>
-                            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
-                                <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">偶</span>
-                                偶数日 (周二、四、六)
-                            </h3>
+                            <div class="mb-4">
+                                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                    <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shadow-sm">偶</span>
+                                    偶数日 (周二、四、六)
+                                </h3>
+                                <p class="text-xs text-slate-500 ml-10 mt-0.5 font-medium">Juft kunlar (Seshanba, Payshanba, Shanba)</p>
+                            </div>
                             <div class="pl-4 sm:pl-6 border-l-2 border-slate-100 space-y-4 ml-4">
                                 <!-- 16:00 -->
                                 <div class="relative flex flex-col gap-2 bg-slate-50 hover:bg-white p-4 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all hover:shadow-md group">
