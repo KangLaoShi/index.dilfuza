@@ -734,7 +734,7 @@
                                             <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 18:00 - 19:30
                                         </div>
                                     </div>
-                                    <h4 class="text-lg font-bold text-slate-800">HSK2-🍌班</h4>
+                                    <h4 class="text-lg font-bold text-slate-800">HSK3-1班</h4>
                                     <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
                                         <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
                                         <span class="text-slate-600 font-medium text-sm flex items-center gap-1 flex-grow">
@@ -989,6 +989,22 @@
         // 初始化 Lucide 图标
         lucide.createIcons();
 
+        // 页面加载时从 localStorage 恢复已保存的进度
+        document.addEventListener('DOMContentLoaded', function() {
+            // 我们有5个班级的进度需要检查
+            for (let id = 1; id <= 5; id++) {
+                const savedProgress = localStorage.getItem('course_progress_' + id);
+                if (savedProgress) {
+                    const textElement = document.getElementById(`prog-text-${id}`);
+                    const inputElement = document.getElementById(`prog-input-${id}`);
+                    if (textElement && inputElement) {
+                        textElement.innerText = savedProgress;
+                        inputElement.value = savedProgress;
+                    }
+                }
+            }
+        });
+
         // HSK 3.0 系统 - 切换逻辑
         function switchHsk3SystemTab(tabId, element) {
             document.querySelectorAll('.hsk3sys-tab').forEach(tab => {
@@ -1090,6 +1106,9 @@
             
             // 更新文字
             textElement.innerText = inputElement.value;
+            
+            // 新增：将修改后的进度保存到浏览器的 localStorage 中
+            localStorage.setItem('course_progress_' + id, inputElement.value);
             
             // 隐藏输入框，显示文本
             inputElement.classList.add('hidden');
