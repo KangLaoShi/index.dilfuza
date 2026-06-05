@@ -429,6 +429,10 @@
                 <button onclick="switchHsk3SystemTab('hsk3sys-1', this)" class="hsk3sys-tab active px-5 py-2 rounded-full text-sm font-medium transition-colors bg-orange-500 text-white shadow-sm">HSK 1</button>
                 <button onclick="switchHsk3SystemTab('hsk3sys-2', this)" class="hsk3sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 2</button>
                 <button onclick="switchHsk3SystemTab('hsk3sys-3', this)" class="hsk3sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 3</button>
+                <button onclick="switchHsk3SystemTab('hsk4sys-4', this)" class="hsk4sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 4</button>
+                <button onclick="switchHsk3SystemTab('hsk5sys-5', this)" class="hsk5sys-tab px-5 py-2 rounded-full text-sm font-medium transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200">HSK 5</button>
+
+
             </div>
 
             <!-- 内容选择区 -->
@@ -436,6 +440,9 @@
                 <!-- HSK 1 (共15课) -->
                 <div id="hsk3sys-1" class="hsk3sys-content block animate-fade-in">
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3.0_1.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">生词(300个)</span>
+                        </a>
                         <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
                             <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
                         </a>
@@ -487,6 +494,9 @@
                 <!-- HSK 2 (共15课) -->
                 <div id="hsk3sys-2" class="hsk3sys-content hidden animate-fade-in">
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3.0_2.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">生词(500个)</span>
+                        </a>
                         <a href="https://kanglaoshi.github.io/NEWHSK2_1.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
                             <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
                         </a>
@@ -538,6 +548,9 @@
                 <!-- HSK 3 (共20课) -->
                 <div id="hsk3sys-3" class="hsk3sys-content hidden animate-fade-in">
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3.0_3.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">生词(1000个)</span>
+                        </a>
                         <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
                             <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 1 课</span>
                         </a>
@@ -597,6 +610,15 @@
                         </a>
                         <a href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
                             <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">第 20 课</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HSK 4 -->
+                <div id="hsk3sys-3" class="hsk3sys-content hidden animate-fade-in">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <a href="https://kanglaoshi.github.io/HSK3.0_4.dilfuza/" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-orange-50 border border-orange-200 hover:border-orange-400 rounded-xl transition-all group shadow-sm hover:shadow-md">
+                            <i data-lucide="play" class="w-3.5 h-3.5 text-orange-500 group-hover:text-orange-600 fill-current"></i><span class="font-medium text-slate-700 group-hover:text-orange-700 text-sm">生词(2000个)</span>
                         </a>
                     </div>
                 </div>
