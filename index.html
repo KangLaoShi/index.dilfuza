@@ -141,7 +141,6 @@
         <!-- ================== 1. 首页 (课表) ================== -->
         <div id="page-home" class="page-section fade-in block">
             <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 mb-6">
-                <!-- 模块标题 (还原图片风格) -->
                 <div class="flex flex-col mb-10 text-center md:text-left">
                     <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
                         <i data-lucide="leaf" class="w-4 h-4 text-themeGreen"></i>
@@ -159,19 +158,18 @@
                         <p class="text-sm text-slate-400 font-medium mb-8 ml-8">Toq kunlar (Dush, Chor, Juma)</p>
                         
                         <div class="space-y-5 relative before:absolute before:inset-0 before:ml-[11px] before:h-full before:w-0.5 before:bg-gradient-to-b before:from-themeGreen before:via-slate-200 before:to-transparent">
-                            
                             <!-- 课程卡片 1 -->
                             <div class="relative flex items-center gap-5 group is-active">
                                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                 <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
                                     <div class="text-sm text-themeGreen font-bold mb-1">10:00 - 11:30</div>
-                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK1 🍉班</div>
+                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-1</div>
                                     <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50"></i>
-                                            <span class="editable-progress font-medium" data-id="hsk1-wm">当前：第5课</span>
+                                        <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
+                                            <span class="editable-progress font-medium truncate" data-id="hsk2-1">当前：第5课</span>
                                         </div>
-                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1" onclick="toggleEdit(this)">
+                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1 shrink-0" onclick="toggleEdit(this)">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                     </div>
@@ -183,13 +181,13 @@
                                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                 <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
                                     <div class="text-sm text-themeGreen font-bold mb-1">16:00 - 17:30</div>
-                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2 🍓班</div>
+                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK1-1</div>
                                     <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50"></i>
-                                            <span class="editable-progress font-medium" data-id="hsk2-sb">当前：第7课</span>
+                                        <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
+                                            <span class="editable-progress font-medium truncate" data-id="hsk1-1">当前：第7课</span>
                                         </div>
-                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1" onclick="toggleEdit(this)">
+                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1 shrink-0" onclick="toggleEdit(this)">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                     </div>
@@ -201,13 +199,13 @@
                                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                 <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
                                     <div class="text-sm text-themeGreen font-bold mb-1">18:00 - 19:30</div>
-                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2 🍎班</div>
+                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-2</div>
                                     <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50"></i>
-                                            <span class="editable-progress font-medium" data-id="hsk2-ap">当前：第5课</span>
+                                        <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
+                                            <span class="editable-progress font-medium truncate" data-id="hsk2-2">当前：第5课</span>
                                         </div>
-                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1" onclick="toggleEdit(this)">
+                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1 shrink-0" onclick="toggleEdit(this)">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                     </div>
@@ -225,19 +223,18 @@
                         <p class="text-sm text-slate-400 font-medium mb-8 ml-8">Juft kunlar (Sesh, Pay, Shanba)</p>
                         
                         <div class="space-y-5 relative before:absolute before:inset-0 before:ml-[11px] before:h-full before:w-0.5 before:bg-gradient-to-b before:from-themeBlueLight before:via-slate-200 before:to-transparent">
-                            
                             <!-- 课程卡片 4 -->
                             <div class="relative flex items-center gap-5 group is-active">
                                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeBlueLight shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                 <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
                                     <div class="text-sm text-themeBlueLight font-bold mb-1">16:00 - 17:30</div>
-                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2 🍌班</div>
+                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-3</div>
                                     <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50"></i>
-                                            <span class="editable-progress font-medium" data-id="hsk2-ba">当前：第2课</span>
+                                        <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
+                                            <span class="editable-progress font-medium truncate" data-id="hsk2-3">当前：第2课</span>
                                         </div>
-                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1" onclick="toggleEdit(this)">
+                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1 shrink-0" onclick="toggleEdit(this)">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                     </div>
@@ -249,13 +246,13 @@
                                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeBlueLight shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                 <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
                                     <div class="text-sm text-themeBlueLight font-bold mb-1">18:00 - 19:30</div>
-                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK3 🍇班</div>
+                                    <div class="font-bold text-themeBlue mb-3 text-lg">HSK3-1</div>
                                     <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50"></i>
-                                            <span class="editable-progress font-medium" data-id="hsk3-gr">当前：第1课</span>
+                                        <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                            <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
+                                            <span class="editable-progress font-medium truncate" data-id="hsk3-1">当前：第1课</span>
                                         </div>
-                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1" onclick="toggleEdit(this)">
+                                        <button class="edit-btn text-themeGreen hover:text-themeBlue transition-colors p-1 shrink-0" onclick="toggleEdit(this)">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                     </div>
