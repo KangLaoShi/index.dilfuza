@@ -39,6 +39,9 @@
         .editable-progress {
             cursor: pointer;
             transition: all 0.2s;
+            display: block;
+            width: 100%;
+            padding: 2px 4px;
         }
         .editable-progress:hover {
             background-color: #f1f5f9;
@@ -49,74 +52,58 @@
             border-radius: 4px;
             padding: 2px 4px;
             font-size: 14px;
-            width: 100px;
+            width: 100%;
             outline: none;
+            box-sizing: border-box;
         }
         .edit-input:focus { border-color: #1c3d5a; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
 
-    <!-- HERO Header (深蓝+青柠绿 旅行主题) -->
     <header class="bg-themeBlue pt-12 pb-24 px-4 shadow-md relative z-30">
-        
         <div class="relative z-10 max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left">
-            <!-- 绿色副标题 (还原图片 Tour Categories) -->
             <div class="text-themeGreen text-sm font-bold mb-3 flex items-center justify-center md:justify-start gap-2 uppercase tracking-wide">
                 <i data-lucide="leaf" class="w-4 h-4"></i>
                 Chinese Learning System
             </div>
-            
-            <!-- 主标题 -->
             <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3 text-white drop-shadow-sm">
                 康老师汉语教学系统
             </h1>
-
-            <!-- 副说明 (还原图片子标题) -->
             <p class="text-slate-300 text-sm md:text-base font-medium mb-10 tracking-wide max-w-2xl">
                 Dilfuza Kāng lǎo shī bilan xitoy tilini o'rganmiz — professional, fun, and easy.
             </p>
             
-            <!-- 快捷导航按钮组 -->
             <div class="w-full overflow-x-auto no-scrollbar pb-2">
                 <div class="flex justify-center md:justify-start min-w-max gap-3 px-2 md:px-0">
-                    
                     <button onclick="switchPage('page-home', this)" class="nav-btn active flex flex-col items-center justify-center px-5 py-2.5 bg-white text-themeBlue rounded-xl shadow-lg transition-colors leading-tight group">
                         <span class="text-sm font-bold">首页</span>
                         <span class="text-[11px] font-medium transition-colors">Bosh sahifa</span>
                     </button>
-
                     <button onclick="switchPage('page-course', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">课程系统</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">Dars tizimi</span>
                     </button>
-
                     <button onclick="switchPage('page-words', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">单词与游戏</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">So'zlar va o'yinlar</span>
                     </button>
-
                     <button onclick="switchPage('page-hsk3', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">HSK 3.0</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">HSK 3.0 tizimi</span>
                     </button>
-
                     <button onclick="switchPage('page-video', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">教学视频</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">O'quv videolari</span>
                     </button>
-
                     <button onclick="switchPage('page-music', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">汉语歌曲</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">Xitoycha qo'shiqlar</span>
                     </button>
-
                     <button onclick="switchPage('page-works', this)" class="nav-btn flex flex-col items-center justify-center px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-colors text-white backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-medium">学生作品</span>
                         <span class="text-[11px] text-white/70 group-hover:text-white/90 transition-colors">Talabalar ishlari</span>
                     </button>
-
-                    <!-- 学生管理 (外链) -->
                     <a href="https://kanglaoshi.github.io/Student-Payment-Tracker.dilfuza/" target="_blank" class="flex flex-col items-center justify-center px-5 py-2.5 bg-themeGreen/20 hover:bg-themeGreen text-themeGreen hover:text-white border border-themeGreen/30 rounded-xl transition-all backdrop-blur-md shadow-sm leading-tight group">
                         <span class="text-sm font-bold flex items-center gap-1">
                             <i data-lucide="users" class="w-4 h-4"></i>学生管理
@@ -127,7 +114,6 @@
             </div>
         </div>
 
-        <!-- 底部弧形分隔 (还原图片中的白色波浪底) -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0 transform translate-y-[1px]">
             <svg class="relative block w-full h-[60px] md:h-[100px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" class="fill-slate-50"></path>
@@ -135,7 +121,6 @@
         </div>
     </header>
 
-    <!-- 主体内容 (SPA 容器) -->
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 relative z-20 -mt-8">
 
         <!-- ================== 1. 首页 (课表) ================== -->
@@ -211,7 +196,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -267,7 +251,6 @@
         <!-- ================== 2. 课程系统 ================== -->
         <div id="page-course" class="page-section hidden fade-in">
             <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 mb-6">
-                
                 <div class="flex flex-col mb-8 text-center md:text-left">
                     <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
                         <i data-lucide="leaf" class="w-4 h-4 text-themeGreen"></i>
@@ -827,10 +810,8 @@
                     <h2 class="text-3xl font-bold text-themeBlue">汉语歌曲</h2>
                 </div>
 
-                <!-- Grid transformed to match video style -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-                    <!-- 1. 只要有你 -->
-                    <a href="https://youtu.be/4UVHlnoPkSI" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/4UVHlnoPkSI?si=Dy3vJsDtRgFEng6U" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">只要有你</h3>
                         </div>
@@ -838,13 +819,17 @@
                             <img src="https://i.ytimg.com/vi/4UVHlnoPkSI/hqdefault.jpg" alt="只要有你" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 2. 我的好朋友在哪儿 -->
-                    <a href="https://youtu.be/YNZcx_aGR7g" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/YNZcx_aGR7g?si=4CsrIKkP6c7Pk7xy" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">我的好朋友在哪儿</h3>
                         </div>
@@ -852,13 +837,17 @@
                             <img src="https://i.ytimg.com/vi/YNZcx_aGR7g/hqdefault.jpg" alt="我的好朋友在哪儿" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 3. 喂！你好 -->
-                    <a href="https://youtu.be/IpJC7d2yH6s" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/IpJC7d2yH6s?si=AkOvSOGsibScf_aY" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">喂！你好</h3>
                         </div>
@@ -866,13 +855,17 @@
                             <img src="https://i.ytimg.com/vi/IpJC7d2yH6s/hqdefault.jpg" alt="喂！你好" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 4. 你好，你在哪儿 -->
-                    <a href="https://youtu.be/uxEHS7Okris" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/uxEHS7Okris?si=2A1H3ThO5pbdyOAR" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">你好，你在哪儿</h3>
                         </div>
@@ -880,13 +873,17 @@
                             <img src="https://i.ytimg.com/vi/uxEHS7Okris/hqdefault.jpg" alt="你好，你在哪儿" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 5. 我喜欢布哈拉的秋天 -->
-                    <a href="https://youtu.be/eBEP3wVEvok" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/eBEP3wVEvok?si=-3K_Oh7V2TnkJwSZ" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">我喜欢布哈拉的秋天</h3>
                         </div>
@@ -894,13 +891,17 @@
                             <img src="https://i.ytimg.com/vi/eBEP3wVEvok/hqdefault.jpg" alt="我喜欢布哈拉的秋天" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 6. 我的一天 -->
-                    <a href="https://youtu.be/IuXHxvk6mzo" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/IuXHxvk6mzo?si=eX21vpzOoejvhYL1" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">我的一天</h3>
                         </div>
@@ -908,13 +909,17 @@
                             <img src="https://i.ytimg.com/vi/IuXHxvk6mzo/hqdefault.jpg" alt="我的一天" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 7. 汉语真有意思 -->
-                    <a href="https://youtu.be/ptKSwwuqewk" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/ptKSwwuqewk?si=l8DUGl2F3lyqRR87" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">汉语真有意思</h3>
                         </div>
@@ -922,13 +927,17 @@
                             <img src="https://i.ytimg.com/vi/ptKSwwuqewk/hqdefault.jpg" alt="汉语真有意思" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 8. 我敬这人间自由的风 -->
-                    <a href="https://youtu.be/HVOWQCONAPk" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/HVOWQCONAPk?si=ytCxvrZExLgZTeF_" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">我敬这人间自由的风</h3>
                         </div>
@@ -936,13 +945,17 @@
                             <img src="https://i.ytimg.com/vi/HVOWQCONAPk/hqdefault.jpg" alt="我敬这人间自由的风" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
 
-                    <!-- 9. 童话 -->
-                    <a href="https://youtu.be/ltDWPTdW1AM" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                    <a href="https://youtu.be/ltDWPTdW1AM?si=-Bvb-j0ia10-frk-" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
                         <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
                             <h3 class="text-white font-bold text-[13px] truncate">童话</h3>
                         </div>
@@ -950,8 +963,49 @@
                             <img src="https://i.ytimg.com/vi/ltDWPTdW1AM/hqdefault.jpg" alt="童话" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 flex justify-between items-end">
-                            <div><p class="text-xs text-slate-400 mb-1">Music</p><p class="text-xs font-bold text-themeGreen">Play</p></div>
-                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://youtube.com/shorts/5zx60GVR6Xg?si=oFC-_zBSAiPTXMdw" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                        <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
+                            <h3 class="text-white font-bold text-[13px] truncate">明年我会说汉语</h3>
+                        </div>
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img src="https://i.ytimg.com/vi/5zx60GVR6Xg/hqdefault.jpg" alt="明年我会说汉语" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-end">
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://youtube.com/shorts/S3Tnq1vWDMA?si=5vh5rXNs5nTtG1D6" target="_blank" class="group flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 bg-white">
+                        <div class="bg-themeBlueLight py-3 px-2 text-center transition-colors group-hover:bg-themeBlue">
+                            <h3 class="text-white font-bold text-[13px] truncate">今天几月几号</h3>
+                        </div>
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img src="https://i.ytimg.com/vi/S3Tnq1vWDMA/hqdefault.jpg" alt="今天几月几号" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-4 flex justify-between items-end">
+                            <div>
+                                <p class="text-xs text-slate-400 mb-1">Music</p>
+                                <p class="text-xs font-bold text-themeGreen">Play</p>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-themeGreen group-hover:text-white transition-colors">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -1277,6 +1331,13 @@
                 input.className = 'edit-input font-medium text-themeBlue';
                 input.setAttribute('data-id', progressId);
 
+                // 添加回车保存功能
+                input.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        toggleEdit(btnElement);
+                    }
+                });
+
                 container.replaceChild(input, textElement);
                 input.focus();
 
@@ -1284,11 +1345,15 @@
                 iconElement.classList.replace('text-themeGreen', 'text-themeBlue');
                 lucide.createIcons({root: btnElement});
             } else {
-                const currentVal = textElement.value;
+                let currentVal = textElement.value.trim();
                 const progressId = textElement.getAttribute('data-id');
 
+                if (!currentVal) {
+                    currentVal = "当前：未设置进度";
+                }
+
                 const span = document.createElement('span');
-                span.className = 'editable-progress font-medium';
+                span.className = 'editable-progress font-medium truncate';
                 span.innerText = currentVal;
                 span.setAttribute('data-id', progressId);
 
