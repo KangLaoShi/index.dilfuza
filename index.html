@@ -1867,24 +1867,30 @@
             window.lucide.createIcons({root: btn});
 
             try {
-                // 判断是否存在服务端给的自定义Token（如在特殊环境中）
-                let loggedIn = false;
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    try {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                        loggedIn = true;
-                    } catch (tokenErr) {
-                        console.warn("环境注入的 Token 无效，降级使用模拟登录:", tokenErr);
+                if (auth) {
+                    // 环境存在 Firebase 配置，使用真实的身份验证
+                    let loggedIn = false;
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        try {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                            loggedIn = true;
+                        } catch (tokenErr) {
+                            console.warn("环境注入的 Token 无效，降级使用模拟登录:", tokenErr);
+                        }
+                    } 
+                    
+                    if (!loggedIn) {
+                        // 稍微延迟，营造安全验证的反馈感
+                        await new Promise(r => setTimeout(r, 800));
+                        await signInAnonymously(auth);
                     }
-                } 
-                
-                if (!loggedIn) {
-                    // 没有真实后端，或者 token 失败，我们使用匿名登录来“模拟”真实账户创建，从而获得唯一持久 UID
-                    // 这里故意加上一个小延迟，让用户感觉真的在“验证”
+                    // 成功后，onAuthStateChanged 会接管并调用 updateUIForLoggedInUser
+                } else {
+                    // 本地或离线环境，触发纯前端的模拟登录逻辑
                     await new Promise(r => setTimeout(r, 800));
-                    await signInAnonymously(auth);
+                    currentUserUid = 'local_demo_user_' + Date.now().toString().slice(-6);
+                    updateUIForLoggedInUser({ uid: currentUserUid });
                 }
-                // 成功后，onAuthStateChanged 会接管并调用 updateUIForLoggedInUser
                 
                 // 给按钮一个成功反馈
                 btn.classList.replace('bg-themeBlue', 'bg-themeGreen');
@@ -1904,7 +1910,8 @@
 
             } catch (error) {
                 console.error("Login failed:", error);
-                errorMsg.innerText = "登录服务异常，请稍后再试: " + error.code;
+                // 修复 undefined 的问题，打印出真实的错误信息
+                errorMsg.innerText = "登录服务异常，请稍后再试: " + (error.message || error.code || "未知错误");
                 errorMsg.classList.remove('hidden');
                 
                 btn.innerHTML = originalText;
@@ -1914,12 +1921,17 @@
         };
 
         window.handleLogout = async function() {
-            if (!auth) return;
-            try {
-                await signOut(auth);
-                // 成功后，onAuthStateChanged 会自动调用 updateUIForLoggedOutUser
-            } catch (error) {
-                console.error("Logout error", error);
+            if (auth) {
+                try {
+                    await signOut(auth);
+                    // 成功后，onAuthStateChanged 会自动调用 updateUIForLoggedOutUser
+                } catch (error) {
+                    console.error("Logout error", error);
+                }
+            } else {
+                // 本地或离线环境的登出逻辑
+                currentUserUid = null;
+                updateUIForLoggedOutUser();
             }
         };
 
