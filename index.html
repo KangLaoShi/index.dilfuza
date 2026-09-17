@@ -30,6 +30,10 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -68,7 +72,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen relative">
 
-    <!-- 全局 Loading 遮罩，用于 Firebase 初始化前 -->
+    <!-- 全局 Loading 遮罩，用于系统初始化前 -->
     <div id="global-loading" class="fixed inset-0 bg-themeBlue z-[999] flex flex-col items-center justify-center transition-opacity duration-500">
         <i data-lucide="loader-2" class="w-12 h-12 text-white animate-spin mb-4"></i>
         <p class="text-white font-medium tracking-widest">系统初始化中...</p>
@@ -221,8 +225,8 @@
                                 <div class="relative flex items-center gap-5 group is-active">
                                     <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                     <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
-                                        <div class="text-sm text-themeGreen font-bold mb-1">10:00 - 11:30</div>
-                                        <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-1</div>
+                                        <div class="editable-text text-sm text-themeGreen font-bold mb-1 cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 inline-block transition-colors" data-id="time-1" onclick="inlineEdit(this)" title="点击修改时间">10:00 - 11:30</div>
+                                        <div class="editable-text font-bold text-themeBlue mb-3 text-lg cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 transition-colors block w-fit" data-id="course-1" onclick="inlineEdit(this)" title="点击修改课程">HSK2-1</div>
                                         <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
                                             <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
                                                 <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
@@ -239,8 +243,8 @@
                                 <div class="relative flex items-center gap-5 group is-active">
                                     <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                     <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
-                                        <div class="text-sm text-themeGreen font-bold mb-1">16:00 - 17:30</div>
-                                        <div class="font-bold text-themeBlue mb-3 text-lg">HSK1-1</div>
+                                        <div class="editable-text text-sm text-themeGreen font-bold mb-1 cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 inline-block transition-colors" data-id="time-2" onclick="inlineEdit(this)" title="点击修改时间">16:00 - 17:30</div>
+                                        <div class="editable-text font-bold text-themeBlue mb-3 text-lg cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 transition-colors block w-fit" data-id="course-2" onclick="inlineEdit(this)" title="点击修改课程">HSK1-1</div>
                                         <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
                                             <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
                                                 <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
@@ -257,8 +261,8 @@
                                 <div class="relative flex items-center gap-5 group is-active">
                                     <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeGreen shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                     <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
-                                        <div class="text-sm text-themeGreen font-bold mb-1">18:00 - 19:30</div>
-                                        <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-2</div>
+                                        <div class="editable-text text-sm text-themeGreen font-bold mb-1 cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 inline-block transition-colors" data-id="time-3" onclick="inlineEdit(this)" title="点击修改时间">18:00 - 19:30</div>
+                                        <div class="editable-text font-bold text-themeBlue mb-3 text-lg cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 transition-colors block w-fit" data-id="course-3" onclick="inlineEdit(this)" title="点击修改课程">HSK2-2</div>
                                         <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
                                             <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
                                                 <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
@@ -285,8 +289,8 @@
                                 <div class="relative flex items-center gap-5 group is-active">
                                     <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeBlueLight shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                     <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
-                                        <div class="text-sm text-themeBlueLight font-bold mb-1">16:00 - 17:30</div>
-                                        <div class="font-bold text-themeBlue mb-3 text-lg">HSK2-3</div>
+                                        <div class="editable-text text-sm text-themeBlueLight font-bold mb-1 cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 inline-block transition-colors" data-id="time-4" onclick="inlineEdit(this)" title="点击修改时间">16:00 - 17:30</div>
+                                        <div class="editable-text font-bold text-themeBlue mb-3 text-lg cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 transition-colors block w-fit" data-id="course-4" onclick="inlineEdit(this)" title="点击修改课程">HSK2-3</div>
                                         <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
                                             <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
                                                 <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
@@ -303,8 +307,8 @@
                                 <div class="relative flex items-center gap-5 group is-active">
                                     <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-themeBlueLight shadow shrink-0 z-10 transition-transform group-hover:scale-125"></div>
                                     <div class="flex-grow p-5 rounded-2xl border border-slate-100 bg-white shadow-sm group-hover:shadow-md group-hover:border-themeBlue/20 transition-all">
-                                        <div class="text-sm text-themeBlueLight font-bold mb-1">18:00 - 19:30</div>
-                                        <div class="font-bold text-themeBlue mb-3 text-lg">HSK3-1</div>
+                                        <div class="editable-text text-sm text-themeBlueLight font-bold mb-1 cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 inline-block transition-colors" data-id="time-5" onclick="inlineEdit(this)" title="点击修改时间">18:00 - 19:30</div>
+                                        <div class="editable-text font-bold text-themeBlue mb-3 text-lg cursor-pointer hover:bg-slate-50 rounded px-1 -ml-1 transition-colors block w-fit" data-id="course-5" onclick="inlineEdit(this)" title="点击修改课程">HSK3-1</div>
                                         <div class="flex items-center justify-between text-sm text-slate-600 bg-slate-50 p-2.5 rounded-xl">
                                             <div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
                                                 <i data-lucide="book-open" class="w-4 h-4 text-themeBlue/50 shrink-0"></i>
@@ -324,21 +328,81 @@
 
             <!-- ================== 1.5 汉语课堂 ================== -->
             <div id="page-classroom" class="page-section hidden fade-in">
-                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 mb-6">
-                    <div class="flex flex-col mb-8 text-center md:text-left">
-                        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
-                            <i data-lucide="leaf" class="w-4 h-4 text-themeGreen"></i>
-                            <span class="text-sm font-bold text-themeGreen uppercase tracking-wider">Xitoy tili darslari</span>
+                <div class="bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 mb-6 flex flex-col">
+                    
+                    <!-- 顶部标题与搜索 -->
+                    <div class="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white relative z-20">
+                        <div class="flex flex-col text-left">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="leaf" class="w-4 h-4 text-themeGreen"></i>
+                                <span class="text-sm font-bold text-themeGreen uppercase tracking-wider">Xitoy tili darslari</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-themeBlue flex items-center gap-2">
+                                汉语课堂
+                            </h2>
                         </div>
-                        <h2 class="text-3xl font-bold text-themeBlue">汉语课堂</h2>
+                        
+                        <div class="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
+                            <button id="classroom-mobile-filter-btn" class="lg:hidden p-2.5 text-slate-500 hover:text-themeBlue bg-slate-100 rounded-xl transition">
+                                <i data-lucide="filter" class="w-5 h-5"></i>
+                            </button>
+                            <div class="relative flex-1 md:w-[280px]">
+                                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input type="text" id="classroom-search" placeholder="Qidirish (Search)..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 focus:bg-white focus:border-themeBlue focus:ring-2 focus:ring-themeBlue/20 rounded-xl text-sm transition-all outline-none">
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="min-h-[300px] flex flex-col items-center justify-center text-slate-500 text-center py-10 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50">
-                        <div class="w-16 h-16 bg-themeBlue/5 rounded-2xl flex items-center justify-center mx-auto mb-4 text-themeBlue">
-                            <i data-lucide="book-open-check" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-xl font-bold text-slate-700 mb-2">内容模块正在建设中</p>
-                        <p class="text-sm text-slate-400">Xitoy tili darslari tayyorlanmoqda...</p>
+                    <!-- 主体内容 (侧边栏 + 视频网格) -->
+                    <div class="flex relative min-h-[600px] max-h-[700px] overflow-hidden bg-slate-50">
+                        
+                        <!-- 移动端遮罩 -->
+                        <div id="classroom-mobile-overlay" class="absolute inset-0 bg-themeBlueDark/40 backdrop-blur-sm z-30 hidden transition-opacity lg:hidden"></div>
+
+                        <!-- 侧边栏 (筛选器) -->
+                        <aside id="classroom-sidebar" class="absolute lg:relative w-64 bg-white border-r border-slate-100 h-full overflow-y-auto flex-shrink-0 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-lg lg:shadow-none">
+                            <div class="p-6 space-y-8">
+                                <div class="flex justify-between items-center lg:hidden border-b border-slate-100 pb-4">
+                                    <span class="font-bold text-themeBlue">筛选 (Filtrlash)</span>
+                                    <button id="close-sidebar-btn" class="p-1.5 text-slate-400 hover:text-themeBlue rounded-lg hover:bg-slate-100 transition-colors">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4 text-themeGreen"></i>Darajalar (Levels)</h3>
+                                    <div class="space-y-3 text-sm text-slate-600" id="filter-levels"></div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="hash" class="w-4 h-4 text-themeGreen"></i>Mavzular (Topics)</h3>
+                                    <div class="space-y-3 text-sm text-slate-600" id="filter-topics"></div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-themeGreen"></i>Davomiyligi (Length)</h3>
+                                    <div class="space-y-3 text-sm text-slate-600" id="filter-length"></div>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <!-- 视频列表区域 -->
+                        <main class="flex-1 overflow-y-auto p-4 md:p-6 w-full custom-scrollbar">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="text-sm font-bold text-themeBlue" id="video-count">Jami: 0 ta video</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm text-slate-500 hidden sm:inline">Tartib:</span>
+                                    <select class="border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-themeBlue/20 bg-white shadow-sm text-slate-700 outline-none cursor-pointer">
+                                        <option>Yangi (Newest)</option>
+                                        <option>Eski (Oldest)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5" id="classroom-video-grid">
+                                <!-- 视频卡片动态生成 -->
+                            </div>
+                        </main>
                     </div>
                 </div>
             </div>
@@ -711,7 +775,7 @@
                             </div>
                         </div>
 
-                        <!-- HSK 3.0 - HSK 2 (真实链接) -->
+                        <!-- HSK 3.0 - HSK 2 -->
                         <div id="sys-hsk2" class="tab-content system-content hidden fade-in">
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                 <a href="https://kanglaoshi.github.io/HSK3.0_2.dilfuza/" target="_blank" class="flex justify-between items-center p-4 rounded-xl border border-slate-200 bg-white text-themeBlue font-bold hover:border-themeGreen hover:shadow-md transition-all group"><span>生词(500)</span><i data-lucide="arrow-right" class="w-4 h-4 text-themeGreen opacity-0 group-hover:opacity-100"></i></a>
@@ -1778,10 +1842,6 @@
                         // 未登录
                         currentUserUid = null;
                         updateUIForLoggedOutUser();
-                        
-                        // 由于目前是纯前端演示，如果你希望它“一刷新就自动分配身份”，
-                        // 可以在这里静默调用 signInAnonymously(auth);
-                        // 但为了体现“需要登录”的效果，我们保持未登录状态，等待用户点击按钮。
                     }
                     
                     // 隐藏全局 Loading
@@ -1809,17 +1869,18 @@
             userMenu.classList.remove('hidden');
             userMenu.classList.add('block');
             
-            // 显示用户名前几位作为代替
+            // 显示用户名前几位作为代替，优先使用缓存的真实用户名
+            const activeUser = localStorage.getItem('active_username') || 'User';
             const displayId = user.uid.substring(0, 6) + '...';
-            document.getElementById('nav-user-name').innerText = 'User_' + displayId;
+            document.getElementById('nav-user-name').innerText = activeUser;
             document.getElementById('nav-user-uid').innerText = user.uid;
 
             // 2. 移除主内容的模糊遮罩
             document.getElementById('main-content-wrapper').classList.remove('auth-guard-blur');
             document.getElementById('auth-overlay').classList.add('hidden');
 
-            // 3. 重新绑定进度数据 (基于用户)
-            loadUserProgress(user.uid);
+            // 3. 重新绑定进度数据
+            loadUserProgress();
             
             // 关闭可能的弹窗
             closeLoginModal();
@@ -1852,12 +1913,18 @@
             
             if (!usernameInput || !passwordInput) return;
 
-            // 增加特定的用户名和密码的校验
-            if (usernameInput !== 'kanglaoshi' || passwordInput !== 'twins.2026') {
+            // 增加特定的用户名和密码的校验 (支持老师账号和学生账号)
+            const isTeacher = usernameInput === 'kanglaoshi' && passwordInput === 'twins.2026';
+            const isStudent = usernameInput === 'xuesheng' && passwordInput === '11228';
+
+            if (!isTeacher && !isStudent) {
                 errorMsg.innerText = "用户名或密码错误，请重试 (Xato login yoki parol)！";
                 errorMsg.classList.remove('hidden');
                 return;
             }
+
+            // 保存当前登录的用户名，用于决定课表数据存储键值
+            localStorage.setItem('active_username', usernameInput);
 
             // 模拟加载状态
             const originalText = btn.innerHTML;
@@ -1910,7 +1977,6 @@
 
             } catch (error) {
                 console.error("Login failed:", error);
-                // 修复 undefined 的问题，打印出真实的错误信息
                 errorMsg.innerText = "登录服务异常，请稍后再试: " + (error.message || error.code || "未知错误");
                 errorMsg.classList.remove('hidden');
                 
@@ -1921,6 +1987,7 @@
         };
 
         window.handleLogout = async function() {
+            localStorage.removeItem('active_username'); // 退出时清除本地账号标记
             if (auth) {
                 try {
                     await signOut(auth);
@@ -1942,15 +2009,18 @@
         window.onload = initApp;
 
         // ==========================================
-        // 进度保存 (基于用户UID)
+        // 进度保存 (基于用户账号)
         // ==========================================
-        function loadUserProgress(uid) {
-            if (!uid) return;
+        function loadUserProgress() {
+            const activeUser = localStorage.getItem('active_username');
+            if (!activeUser) return; // 只有识别到用户时才加载
+
+            // 1. 加载课程进度
             const progressElements = document.querySelectorAll('.editable-progress');
             progressElements.forEach(el => {
                 const courseId = el.getAttribute('data-id');
-                // 使用 uid + courseId 作为 key 存储在 localStorage
-                const savedProgress = localStorage.getItem(`progress_${uid}_${courseId}`);
+                // 使用 activeUser 作为 key 存储在 localStorage
+                const savedProgress = localStorage.getItem(`progress_${activeUser}_${courseId}`);
                 if (savedProgress) {
                     el.innerText = savedProgress;
                 } else {
@@ -1962,11 +2032,22 @@
                     else el.innerText = '当前：未设置';
                 }
             });
+
+            // 2. 加载自定义的课表名称和时间
+            const textElements = document.querySelectorAll('.editable-text');
+            textElements.forEach(el => {
+                const id = el.getAttribute('data-id');
+                const savedText = localStorage.getItem(`schedule_${activeUser}_${id}`);
+                if (savedText) {
+                    el.innerText = savedText;
+                }
+            });
         }
 
         window.toggleEdit = function(btnElement) {
+            const activeUser = localStorage.getItem('active_username');
             // 如果未登录，不允许修改 (虽然 UI 被遮罩挡住了，但为了安全加一层拦截)
-            if (!currentUserUid) return;
+            if (!activeUser) return;
 
             const container = btnElement.previousElementSibling;
             const textElement = container.querySelector('.editable-progress') || container.querySelector('.edit-input');
@@ -2008,14 +2089,48 @@
                 span.innerText = currentVal;
                 span.setAttribute('data-id', progressId);
 
-                // 保存到 localStorage 时，带上用户的 UID
-                localStorage.setItem(`progress_${currentUserUid}_${progressId}`, currentVal);
+                // 保存到 localStorage 时，带上用户的账号标识
+                localStorage.setItem(`progress_${activeUser}_${progressId}`, currentVal);
                 container.replaceChild(span, textElement);
 
                 iconElement.setAttribute('data-lucide', 'pencil');
                 iconElement.classList.replace('text-themeBlue', 'text-themeGreen');
                 window.lucide.createIcons({root: btnElement});
             }
+        }
+
+        // 点击文字即可修改课表信息（时间和课程名）
+        window.inlineEdit = function(el) {
+            const activeUser = localStorage.getItem('active_username');
+            if (!activeUser) return; // 只有登录才能编辑
+
+            if (el.querySelector('input')) return; // 防止重复点击产生多个输入框
+
+            const currentVal = el.innerText;
+            const id = el.getAttribute('data-id');
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentVal;
+            // 继承当前元素的文字样式，设置透明背景以便完美融入
+            input.className = 'border border-themeBlue/30 rounded px-1 outline-none text-inherit font-inherit bg-white shadow-inner min-w-[80px] w-auto max-w-[150px]';
+            
+            input.onblur = function() {
+                let newVal = input.value.trim();
+                if(!newVal) newVal = currentVal; // 如果用户清空了，则恢复原样
+                el.innerText = newVal;
+                localStorage.setItem(`schedule_${activeUser}_${id}`, newVal);
+            };
+            
+            input.onkeypress = function(e) {
+                if(e.key === 'Enter') {
+                    input.blur();
+                }
+            };
+
+            el.innerText = '';
+            el.appendChild(input);
+            input.focus();
         }
     </script>
 
@@ -2083,6 +2198,167 @@
             const modal = document.getElementById('login-modal');
             modal.classList.add('hidden');
         }
+
+        // ==========================================
+        // 汉语课堂 - 视频库逻辑
+        // ==========================================
+        const classroomFilters = {
+            levels: ["Boshlang'ich (Beginner)", "O'rta (Intermediate)", "Yuqori (Advanced)"],
+            topics: ["Madaniyat (Culture)", "Taomlar (Food)", "Vlog (Vlog)", "Kontekstda grammatika (Grammar)"],
+            length: ["0 - 6 Daqiqa", "6 - 15 Daqiqa"]
+        };
+
+        const classroomVideos = [
+            { 
+                title: "如何在餐厅用中文点菜？(Restoranda qanday buyurtma berish kerak?)", 
+                level: "Boshlang'ich (Beginner)", 
+                length: "06:12", 
+                topic: "Taomlar (Food)", 
+                img: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=600&q=80",
+                link: "lesson.html" 
+            },
+            { 
+                title: "中国文化：中秋节与月饼 (Xitoy madaniyati: Kuz o'rtasi bayrami)", 
+                level: "Yuqori (Advanced)", 
+                length: "05:00", 
+                topic: "Madaniyat (Culture)", 
+                img: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=600&q=80",
+                link: "lesson.html"
+            },
+            {
+                title: "Localhost Video Test",
+                level: "O'rta (Intermediate)",
+                length: "05:00",
+                topic: "Vlog (Vlog)",
+                img: "https://images.unsplash.com/photo-1583160247711-2191776b4b91?auto=format&fit=crop&w=600&q=80",
+                link: "http://localhost:8000/"
+            }
+        ];
+
+        function renderClassroomFilters(containerId, items) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            items.forEach(item => {
+                const label = document.createElement('label');
+                label.className = "flex items-center gap-3 cursor-pointer group";
+                label.innerHTML = `
+                    <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-themeBlue focus:ring-themeBlue">
+                    <span class="group-hover:text-themeBlue transition">${item}</span>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        // 初始化筛选器
+        renderClassroomFilters('filter-levels', classroomFilters.levels);
+        renderClassroomFilters('filter-topics', classroomFilters.topics);
+        renderClassroomFilters('filter-length', classroomFilters.length);
+
+        function getClassroomLevelStyle(level) {
+            const styles = {
+                "Boshlang'ich (Beginner)": "bg-green-100 text-green-800 border-green-200",
+                "O'rta (Intermediate)": "bg-blue-100 text-blue-800 border-blue-200",
+                "Yuqori (Advanced)": "bg-red-100 text-red-800 border-red-200",
+            };
+            return styles[level] || "bg-slate-100 text-slate-800 border-slate-200";
+        }
+
+        function renderClassroomVideos(videoList) {
+            const videoGrid = document.getElementById('classroom-video-grid');
+            const countEl = document.getElementById('video-count');
+            if(!videoGrid) return;
+            
+            videoGrid.innerHTML = '';
+            if(countEl) countEl.innerText = `Jami: ${videoList.length} ta video`;
+            
+            if (videoList.length === 0) {
+                videoGrid.innerHTML = `
+                    <div class="col-span-full py-20 flex flex-col items-center justify-center text-slate-400">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="search-x" class="w-8 h-8 text-slate-400"></i>
+                        </div>
+                        <p class="text-base font-bold text-slate-500">Hech narsa topilmadi</p>
+                        <p class="text-sm mt-1">No results found for your search.</p>
+                    </div>
+                `;
+                window.lucide.createIcons({root: videoGrid});
+                return;
+            }
+
+            videoList.forEach(video => {
+                const card = document.createElement('a');
+                card.href = video.link; 
+                card.target = "_blank";
+                card.className = "bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg hover:border-themeBlue/30 hover:-translate-y-1 transition-all duration-300 flex flex-col group cursor-pointer block";
+                
+                card.innerHTML = `
+                    <div class="relative aspect-video overflow-hidden bg-slate-100">
+                        <img src="${video.img}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-themeBlueDark/20 group-hover:bg-themeBlueDark/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <div class="bg-themeGreen text-white rounded-full p-3 shadow-xl transform scale-75 group-hover:scale-100 transition-all duration-300">
+                                <i data-lucide="play" class="w-6 h-6 fill-current ml-0.5"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
+                            ${video.length}
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-1">
+                        <h3 class="font-bold text-slate-800 leading-snug mb-3 line-clamp-2 group-hover:text-themeBlue transition-colors text-sm">
+                            ${video.title}
+                        </h3>
+                        <div class="mt-auto pt-3 flex flex-wrap items-center justify-between gap-2 border-t border-slate-50">
+                            <span class="text-[10px] px-2.5 py-1 rounded-full border font-bold ${getClassroomLevelStyle(video.level)}">
+                                ${video.level}
+                            </span>
+                            <div class="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                                <i data-lucide="tag" class="w-3 h-3"></i>
+                                <span class="truncate max-w-[90px]">${video.topic}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                videoGrid.appendChild(card);
+            });
+            
+            window.lucide.createIcons({root: videoGrid});
+        }
+
+        // 初始化加载所有视频
+        renderClassroomVideos(classroomVideos);
+
+        // 搜索功能监听
+        const classroomSearchInput = document.getElementById('classroom-search');
+        if (classroomSearchInput) {
+            classroomSearchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const filtered = classroomVideos.filter(v => v.title.toLowerCase().includes(searchTerm));
+                renderClassroomVideos(filtered);
+            });
+        }
+
+        // 移动端侧边栏切换逻辑
+        const cMobileFilterBtn = document.getElementById('classroom-mobile-filter-btn');
+        const cCloseSidebarBtn = document.getElementById('close-sidebar-btn');
+        const cSidebar = document.getElementById('classroom-sidebar');
+        const cOverlay = document.getElementById('classroom-mobile-overlay');
+
+        function toggleClassroomSidebar() {
+            if(!cSidebar) return;
+            const isClosed = cSidebar.classList.contains('-translate-x-full');
+            if (isClosed) {
+                cSidebar.classList.remove('-translate-x-full');
+                cOverlay.classList.remove('hidden');
+            } else {
+                cSidebar.classList.add('-translate-x-full');
+                cOverlay.classList.add('hidden');
+            }
+        }
+
+        if(cMobileFilterBtn) cMobileFilterBtn.addEventListener('click', toggleClassroomSidebar);
+        if(cCloseSidebarBtn) cCloseSidebarBtn.addEventListener('click', toggleClassroomSidebar);
+        if(cOverlay) cOverlay.addEventListener('click', toggleClassroomSidebar);
+
     </script>
 </body>
 </html>
